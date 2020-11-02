@@ -1,0 +1,116 @@
+<!-- Default form contact -->
+<form class="text-center border border-light p-5" (ngSubmit)="onSubmit()" [formGroup]="enquireForm">
+
+    <p class="h4 mb-4">Contact us</p>
+
+    <!-- Name -->
+    <div class="form-group">
+        <input 
+            type="text" 
+            class="form-control mb-4" 
+            placeholder="Name" 
+            formControlName="name"
+            >
+        <div class="row">
+            <div class="col">
+                <div class="btn-group mb-4 float-right">
+                    <button 
+                        type="button" 
+                        class="btn btn-secondary btn-sm" 
+                        (click)="onSuggestUserName()">
+                        Suggest Username</button>
+                </div>
+            </div>
+        </div>
+        <p class="alert alert-danger" *ngIf="enquireForm.get('name').touched && !enquireForm.get('name').valid">Please enter valid name</p>
+        <p class="alert alert-success" *ngIf="enquireForm.get('name').touched && enquireForm.get('name').valid">{{name}} is available</p>
+        <!-- Email -->
+    </div>
+    <div class="form-group">
+        <input 
+            type="email" 
+            class="form-control mb-4" 
+            placeholder="E-mail"
+            formControlName="email"
+        >
+        <p class="alert alert-danger" *ngIf="enquireForm.get('email').touched && !enquireForm.get('email').valid">Please enter valid email</p>
+    
+    </div>
+    
+
+    <!-- Subject -->
+    <div class="form-group">
+        <label>Subject</label>
+        <select 
+            class="browser-default custom-select mb-4"
+            formControlName="subject"
+        >   
+            <option *ngFor="let option of options;let i = index" value="{{option.id}}" [attr.default]="i==0">{{option.value}}</option>
+        </select>
+    </div>
+
+    <!-- Message -->
+    <div class="form-group">
+        <textarea 
+            class="form-control rounded-0" 
+            rows="3" 
+            placeholder="Message"
+            formControlName="message"
+        ></textarea>
+    </div>
+
+
+    <!-- checkbox -->
+    <div>
+        <label for="">How was your service experience?</label>
+    </div>
+    <ng-container *ngFor="let e of experience">
+        <div class="form-group form-check form-check-inline">
+            <input 
+                class="form-check-input" 
+                type="radio" 
+                id="{{e.id}}"
+                value="{{e.value}}"
+                formControlName="experience" 
+            >
+            <label class="form-check-label" for="{{e.id}}">
+                {{e.value}}
+            </label>
+        </div>
+    </ng-container>
+
+     <!-- Copy -->
+     <div class="form-check mb-4">
+        <input 
+            type="checkbox" 
+            class="form-check-input" 
+            id="defaultContactFormCopy"
+            formControlName="copy"
+        >
+        <label class="form-check-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+    </div>
+
+   
+    <!-- Send button -->
+    <button 
+        class="btn btn-primary btn-block" 
+        type="submit" 
+        [disabled]="!enquireForm.valid"
+    >
+        Send
+    </button>
+
+    <button class="btn btn-light btn-block" (click)="resetForm()">
+        Reset
+    </button>
+
+</form>
+<!-- Default form contact -->
+
+<hr>
+<div class="row">
+    <div class="col-xs-12 mr-30">
+        <p>Username: {{this.userData.name}}</p>
+        <p>Mail: {{this.userData.email}}</p>
+    </div>
+</div>
